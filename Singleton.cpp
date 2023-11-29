@@ -3,7 +3,7 @@
 class Singleton {
 public:
     static Singleton& getInstance() {
-        static Singleton instance; // Єдиний екземпляр класу
+        static Singleton instance; 
         return instance;
     }
 
