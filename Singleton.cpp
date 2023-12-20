@@ -3,8 +3,14 @@
 class Singleton {
 public:
     static Singleton& getInstance() {
-        static Singleton instance; 
-        return instance;
+        if (!instanceCreated) {
+            instanceCreated = true;
+            static Singleton instance;
+            return instance;
+        } else {
+            static Singleton existingInstance;
+            return existingInstance;
+        }
     }
 
     void someMethod() {
@@ -13,15 +19,20 @@ public:
 
 private:
     Singleton() {}
-    
+    static bool instanceCreated;
+
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
 };
 
+bool Singleton::instanceCreated = false;
+
 int main() {
-    Singleton& instance = Singleton::getInstance();
-    
-    instance.someMethod();
+    Singleton& instance1 = Singleton::getInstance();
+    instance1.someMethod();
+
+    Singleton& instance2 = Singleton::getInstance();
+    instance2.someMethod(); 
 
     return 0;
 }
